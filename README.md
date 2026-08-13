@@ -1,8 +1,10 @@
-# SOS Yoon 🆘⚖️
+# SOS Yoon — Site vitrine 🆘⚖️
 
-Plateforme d'urgence juridique connectant, en quelques minutes, une personne confrontée à une situation urgente relevant du droit avec le professionnel disponible et géographiquement proche.
+Site de présentation de SOS Yoon, plateforme d'urgence juridique connectant, en quelques minutes, une personne confrontée à une situation urgente relevant du droit avec le professionnel disponible et géographiquement proche.
 
-> **Statut actuel** : phase MVP — landing page de présentation en cours de finalisation pour recueillir les retours des clients-testeurs avant de connecter le back-end et développer les fonctionnalités applicatives (dépôt de demande, triage, espace professionnel, etc.).
+> **Statut actuel** : landing page de présentation, destinée à recueillir les retours des clients-testeurs sur le concept avant le développement de l'application.
+>
+> Ce dépôt est **volontairement séparé** du dépôt applicatif (`sos_yoon_app`). Il n'est pas configuré en PWA et ne contient pas de logique métier — c'est un site vitrine statique, pensé pour être léger et rapide à déployer. L'application (authentification, dépôt de demande, suivi, espace professionnel, admin) vit dans son propre projet. Voir la section [Pourquoi deux projets séparés](#pourquoi-deux-projets-séparés).
 
 ## À propos
 
@@ -15,20 +17,9 @@ SOS Yoon couvre les quatre métiers du droit au Sénégal :
 
 L'utilisateur n'a pas à chercher lui-même un professionnel : il dépose sa demande (texte ou vocal), un moteur de triage intelligent identifie le bon métier, et il est orienté automatiquement vers le professionnel le plus pertinent selon sa spécialité, sa disponibilité et sa proximité.
 
-## Fonctionnalités principales
-
-- Dépôt de demande urgente (texte ou message vocal, français / langues locales)
-- Triage automatique par IA
-- Géolocalisation approximative et dispatch pondéré
-- Chatbot d'orientation
-- Notifications et rappels actifs
-- Espace professionnel (profil, spécialité, disponibilité, historique)
-- Tableau de bord d'administration
-- Suivi en temps réel des demandes et messagerie intégrée
+Ce site présente le concept, le fonctionnement et les publics cibles du produit, avec un formulaire pour recueillir les retours des premiers testeurs.
 
 ## Stack technique
-
-### Frontend (ce dépôt)
 
 | Domaine | Technologie |
 |---|---|
@@ -37,25 +28,11 @@ L'utilisateur n'a pas à chercher lui-même un professionnel : il dépose sa dem
 | Style | TailwindCSS v4 |
 | Composants UI | shadcn/ui (Base UI, preset Nova) |
 | Animations | Motion (ex-Framer Motion) |
-| Routing | React Router *(à venir)* |
-| État serveur | TanStack React Query *(à venir)* |
-| État global | Zustand *(à venir)* |
-| Formulaires | React Hook Form + Zod *(à venir)* |
-| Temps réel | Socket.io-client *(à venir)* |
-| Cartes | Leaflet / React-Leaflet *(à venir)* |
-| i18n | i18next *(à venir)* |
-| Monitoring | Sentry *(à venir)* |
-| PWA | vite-plugin-pwa ✅ configuré |
+| Icônes | Lucide |
+| Police de corps | Geist (Fontsource) |
+| Police display | Fraunces |
 
-### Backend
-
-| Domaine | Technologie |
-|---|---|
-| Langage / Framework | Java / Spring Boot |
-| Base de données | PostgreSQL |
-| Hébergement | Azure / AWS |
-| Cache | Caffeine |
-| Sécurité | JWT, MFA, SSL |
+Pas de routing, pas d'état serveur, pas de PWA — ce projet n'en a pas besoin. Ces briques vivent dans le dépôt applicatif.
 
 ## Prérequis
 
@@ -68,12 +45,6 @@ L'utilisateur n'a pas à chercher lui-même un professionnel : il dépose sa dem
 git clone <url-du-repo>
 cd sos_yoon_pwa
 pnpm install
-```
-
-Copier le fichier d'environnement et renseigner les variables nécessaires :
-
-```bash
-cp .env.example .env
 ```
 
 ## Scripts disponibles
@@ -89,40 +60,44 @@ pnpm lint       # Linter le code
 
 ```
 src/
-├── app/                    # Configuration globale (router, providers)
-├── config/                 # Config transverse (rôles, routes, env)
-├── features/               # Un dossier par fonctionnalité métier
-│   ├── landing/             # ✅ Landing page MVP (en cours)
-│   ├── demande-urgente/     # À venir
-│   ├── professionnel/       # À venir
-│   ├── suivi-demande/       # À venir
-│   ├── messagerie/          # À venir
-│   ├── auth/                 # À venir
-│   └── admin-dashboard/      # À venir
+├── app/
+│   └── App.tsx              # Point d'entrée, affiche LandingPage
+├── features/
+│   └── landing/
+│       ├── components/
+│       │   ├── Hero.tsx
+│       │   ├── RadarPulse.tsx
+│       │   ├── TrustBanner.tsx
+│       │   ├── ProblemSection.tsx
+│       │   ├── HowItWorks.tsx
+│       │   ├── LegalDomainsGrid.tsx
+│       │   ├── AppShowcase.tsx
+│       │   ├── AudienceSection.tsx
+│       │   ├── TrustSecurity.tsx
+│       │   ├── FinalCta.tsx
+│       │   ├── Footer.tsx
+│       │   └── LandingPage.tsx   # Assemble toutes les sections
+│       └── index.ts              # Export public de la feature
 ├── shared/
 │   ├── components/
-│   │   ├── ui/               # Généré par shadcn — ne pas éditer à la main
-│   │   ├── AnimatedSection.tsx
-│   │   └── StaggerGroup.tsx
+│   │   ├── ui/                   # Généré par shadcn — ne pas éditer à la main
+│   │   ├── AnimatedSection.tsx   # Wrapper d'animation au scroll
+│   │   └── StaggerGroup.tsx      # Cascade d'apparition (listes, grilles)
 │   ├── hooks/
-│   └── lib/                  # axios, socket, utils (cn), errorHandler
-├── layouts/                 # Layouts mobile / desktop (à venir)
-├── locales/                 # Fichiers de traduction (à venir)
-├── types/                   # Types partagés
-└── assets/
+│   └── lib/
+│       └── utils.ts              # Généré par shadcn (fonction cn)
+├── index.css
+└── main.tsx
 ```
 
-Chaque feature suit une organisation interne cohérente : `components/`, `hooks/`, `api/`, `types.ts`.
+Ce projet n'a qu'une seule feature (`landing`), donc pas de dossier `config/`, `layouts/` ou `types/` globaux pour l'instant — ils seront ajoutés seulement s'ils deviennent nécessaires.
 
-La feature `landing/` est organisée en sections assemblées dans `LandingPage.tsx` : `Hero`, `TrustBanner`, `ProblemSection`, `HowItWorks`, `LegalDomainsGrid`, `AppShowcase`, `AudienceSection`, `TrustSecurity`, `FinalCta`, `Footer`.
+La page est assemblée dans l'ordre suivant, avec une alternance de fond `ink` (sombre) / `paper` (clair) par blocs :
 
-## Convention de gestion d'état
-
-| Type de donnée | Outil |
-|---|---|
-| Données serveur (demandes, profils, statuts) | React Query |
-| État global UI (auth, langue, thème) | Zustand |
-| État local (formulaire, modal) | useState |
+```
+Hero → TrustBanner → ProblemSection → HowItWorks → LegalDomainsGrid
+→ AppShowcase → AudienceSection → TrustSecurity → FinalCta → Footer
+```
 
 ## Direction visuelle
 
@@ -137,9 +112,18 @@ La feature `landing/` est organisée en sections assemblées dans `LandingPage.t
 
 Signature visuelle : un radar de dispatch animé (`RadarPulse`), représentant le mécanisme de mise en relation par proximité.
 
-## PWA
+## Pourquoi deux projets séparés
 
-L'application est configurée en Progressive Web App : installation sur mobile et desktop, notifications push, et mise en cache pour un fonctionnement correct sur connexion faible.
+Une PWA installée doit ouvrir directement l'usage réel du produit, pas un argumentaire marketing. Comme ce site n'a pour but que de présenter le concept et recueillir des retours, l'installer en tant qu'app n'aurait pas de sens pour l'utilisateur.
+
+| | Ce dépôt (`sos_yoon_pwa`) | Dépôt applicatif (`sos_yoon_app`) |
+|---|---|---|
+| Rôle | Site vitrine / marketing | Application fonctionnelle |
+| PWA | Non | Oui |
+| Contenu | Landing page uniquement | Auth, demande urgente, suivi, messagerie, espace pro, admin |
+| Première feature développée | `landing` (terminée) | `auth` (à venir) |
+
+Les composants génériques réutilisables (`AnimatedSection`, `StaggerGroup`, configuration shadcn) sont dupliqués à l'identique entre les deux projets pour l'instant. Une mise en commun via un monorepo pourra être envisagée plus tard si la duplication devient un vrai coût de maintenance.
 
 ## Public cible
 

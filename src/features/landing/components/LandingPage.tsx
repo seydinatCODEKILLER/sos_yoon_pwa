@@ -3,7 +3,7 @@ import { TrustBanner } from "./TrustBanner";
 import { ProblemSection } from "./ProblemSection";
 import { HowItWorks } from "./HowItWorks";
 import { LegalDomainsGrid } from "./LegalDomainsGrid";
-// import { AppShowcase } from "./AppShowcase";
+import { AppShowcase } from "./AppShowcase";
 import { AudienceSection } from "./AudienceSection";
 import { TrustSecurity } from "./TrustSecurity";
 import { FinalCta } from "./FinalCta";
@@ -17,7 +17,7 @@ export function LandingPage() {
       <ProblemSection />
       <HowItWorks />
       <LegalDomainsGrid />
-      {/* <AppShowcase /> */}
+      <AppShowcase />
       <AudienceSection />
       <TrustSecurity />
       <FinalCta />
