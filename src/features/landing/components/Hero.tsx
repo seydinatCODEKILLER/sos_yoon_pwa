@@ -16,6 +16,48 @@ const item: Variants = {
   },
 };
 
+// motif morse de "SOS" : point point point / trait trait trait / point point point
+const morsePattern = [
+  "dot",
+  "dot",
+  "dot",
+  "gap",
+  "dash",
+  "dash",
+  "dash",
+  "gap",
+  "dot",
+  "dot",
+  "dot",
+] as const;
+
+function MorseSignal() {
+  return (
+    <div className="flex items-center gap-1" aria-hidden>
+      {morsePattern.map((unit, i) =>
+        unit === "gap" ? (
+          <span key={i} className="w-1.5" />
+        ) : (
+          <motion.span
+            key={i}
+            className={`h-0.75 rounded-full bg-signal ${
+              unit === "dash" ? "w-4" : "w-1.5"
+            }`}
+            initial={{ opacity: 0.2 }}
+            animate={{ opacity: [0.2, 1, 0.2] }}
+            transition={{
+              duration: 2.8,
+              repeat: Infinity,
+              delay: i * 0.12,
+              ease: "easeInOut",
+            }}
+          />
+        ),
+      )}
+    </div>
+  );
+}
+
 export function Hero() {
   return (
     <section className="relative overflow-hidden bg-ink text-paper">
@@ -33,16 +75,11 @@ export function Hero() {
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 py-24 md:grid-cols-2 md:py-32">
         <motion.div initial="hidden" animate="visible" variants={container}>
-          <motion.div
-            variants={item}
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-paper/15 bg-paper/5 px-3 py-1 text-xs font-medium text-paper/70"
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-signal opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-signal" />
+          <motion.div variants={item} className="mb-6 flex items-center gap-3">
+            <MorseSignal />
+            <span className="text-[11px] uppercase tracking-[0.2em] text-paper/35">
+              S · O · S
             </span>
-            Réseau actif à Dakar{" "}
-            {/* remplacer par une vraie donnée dynamique */}
           </motion.div>
 
           <motion.div variants={item}>
