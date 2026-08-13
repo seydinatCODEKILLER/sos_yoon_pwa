@@ -2,6 +2,8 @@
 
 Plateforme d'urgence juridique connectant, en quelques minutes, une personne confrontée à une situation urgente relevant du droit avec le professionnel disponible et géographiquement proche.
 
+> **Statut actuel** : phase MVP — landing page de présentation en cours de finalisation pour recueillir les retours des clients-testeurs avant de connecter le back-end et développer les fonctionnalités applicatives (dépôt de demande, triage, espace professionnel, etc.).
+
 ## À propos
 
 SOS Yoon couvre les quatre métiers du droit au Sénégal :
@@ -33,16 +35,17 @@ L'utilisateur n'a pas à chercher lui-même un professionnel : il dépose sa dem
 | Framework | React 19 + Vite |
 | Langage | TypeScript |
 | Style | TailwindCSS v4 |
-| Composants UI | shadcn/ui (Base UI) |
-| Routing | React Router |
-| État serveur | TanStack React Query |
-| État global | Zustand |
-| Formulaires | React Hook Form + Zod |
-| Temps réel | Socket.io-client |
-| Cartes | Leaflet / React-Leaflet |
-| i18n | i18next |
-| Monitoring | Sentry |
-| PWA | vite-plugin-pwa |
+| Composants UI | shadcn/ui (Base UI, preset Nova) |
+| Animations | Motion (ex-Framer Motion) |
+| Routing | React Router *(à venir)* |
+| État serveur | TanStack React Query *(à venir)* |
+| État global | Zustand *(à venir)* |
+| Formulaires | React Hook Form + Zod *(à venir)* |
+| Temps réel | Socket.io-client *(à venir)* |
+| Cartes | Leaflet / React-Leaflet *(à venir)* |
+| i18n | i18next *(à venir)* |
+| Monitoring | Sentry *(à venir)* |
+| PWA | vite-plugin-pwa ✅ configuré |
 
 ### Backend
 
@@ -86,23 +89,32 @@ pnpm lint       # Linter le code
 
 ```
 src/
-├── app/                # Configuration globale (router, providers)
-├── config/             # Config transverse (rôles, routes, env)
-├── features/           # Un dossier par fonctionnalité métier
-│   ├── demande-urgente/
-│   ├── professionnel/
-│   ├── suivi-demande/
-│   ├── messagerie/
-│   ├── auth/
-│   └── admin-dashboard/
-├── shared/              # Composants, hooks et lib réutilisables
-├── layouts/             # Layouts mobile / desktop
-├── locales/             # Fichiers de traduction
-├── types/               # Types partagés
+├── app/                    # Configuration globale (router, providers)
+├── config/                 # Config transverse (rôles, routes, env)
+├── features/               # Un dossier par fonctionnalité métier
+│   ├── landing/             # ✅ Landing page MVP (en cours)
+│   ├── demande-urgente/     # À venir
+│   ├── professionnel/       # À venir
+│   ├── suivi-demande/       # À venir
+│   ├── messagerie/          # À venir
+│   ├── auth/                 # À venir
+│   └── admin-dashboard/      # À venir
+├── shared/
+│   ├── components/
+│   │   ├── ui/               # Généré par shadcn — ne pas éditer à la main
+│   │   ├── AnimatedSection.tsx
+│   │   └── StaggerGroup.tsx
+│   ├── hooks/
+│   └── lib/                  # axios, socket, utils (cn), errorHandler
+├── layouts/                 # Layouts mobile / desktop (à venir)
+├── locales/                 # Fichiers de traduction (à venir)
+├── types/                   # Types partagés
 └── assets/
 ```
 
 Chaque feature suit une organisation interne cohérente : `components/`, `hooks/`, `api/`, `types.ts`.
+
+La feature `landing/` est organisée en sections assemblées dans `LandingPage.tsx` : `Hero`, `TrustBanner`, `ProblemSection`, `HowItWorks`, `LegalDomainsGrid`, `AppShowcase`, `AudienceSection`, `TrustSecurity`, `FinalCta`, `Footer`.
 
 ## Convention de gestion d'état
 
@@ -111,6 +123,19 @@ Chaque feature suit une organisation interne cohérente : `components/`, `hooks/
 | Données serveur (demandes, profils, statuts) | React Query |
 | État global UI (auth, langue, thème) | Zustand |
 | État local (formulaire, modal) | useState |
+
+## Direction visuelle
+
+| Rôle | Valeur |
+|---|---|
+| Couleur `ink` (fond sombre) | `#0B1220` |
+| Couleur `paper` (fond clair) | `#FAF7F2` |
+| Couleur `signal` (accent CTA) | `#F0A202` |
+| Couleur `brass` (accent secondaire) | `#B8860B` |
+| Police display | Fraunces |
+| Police corps de texte | Geist |
+
+Signature visuelle : un radar de dispatch animé (`RadarPulse`), représentant le mécanisme de mise en relation par proximité.
 
 ## PWA
 
